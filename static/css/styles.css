@@ -1,0 +1,176 @@
+/* General Body Styling */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #495057; /* Soft text color for readability */
+}
+
+/* Header with logo */
+.header {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Space between the logo and the text */
+    margin-bottom: 20px;
+    justify-content: center; /* Centering the header content */
+    flex-wrap: wrap; /* Allows wrapping for responsiveness */
+}
+
+/* Adjust logo size and hover effect */
+.header .logo {
+    width: 180px; /* Adjust logo size */
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Add subtle shadow for depth */
+    object-fit: contain;
+    transition: transform 0.3s ease-in-out; /* Smooth hover effect */
+}
+
+.header .logo:hover {
+    transform: scale(1.1); /* Slight zoom effect when hovering */
+}
+
+/* Header Title */
+.header h1 {
+    margin: 0;
+    font-size: 2.0rem;
+    font-weight: 600;
+    color: #343a40; /* Darker color for the title */
+    text-transform: uppercase; /* Makes the title more professional */
+    letter-spacing: 2px;
+    text-align: center;
+    word-wrap: break-word; /* Ensures the title wraps to the next line if it's too long */
+    max-width: 70%; /* Limits the width of the title */
+}
+
+/* Header Subtitle/Description */
+.header p {
+    margin: 5px 0;
+    font-size: 1.1rem;
+    color: #6c757d; /* Softer color for the subtitle */
+    text-align: center;
+    font-weight: 500;
+    max-width: 80%; /* Ensures subtitle wraps and doesn't stretch too wide */
+    line-height: 1.5;
+}
+
+/* Container Styling */
+.container {
+    text-align: center;
+    width: 90%;
+    max-width: 800px; /* Max width increased for larger screens */
+    background: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    margin: auto;
+    overflow: hidden;
+}
+
+/* Button Styling */
+.button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 30px; /* More rounded buttons for modern feel */
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+}
+
+.button:hover {
+    background-color: #0056b3;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+}
+
+.button:active {
+    transform: scale(0.98);
+}
+
+.button.warning {
+    background-color: #ffc107;
+    box-shadow: 0 4px 12px rgba(255, 193, 7, 0.2);
+}
+
+.button.warning:hover {
+    background-color: #e0a800;
+}
+
+.button.danger {
+    background-color: #dc3545;
+    box-shadow: 0 4px 12px rgba(220, 53, 69, 0.2);
+}
+
+.button.danger:hover {
+    background-color: #a71d2a;
+}
+
+/* Chat Box Styling */
+.chat-box {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    height: 60vh;
+    max-height: 550px;
+    overflow-y: auto;
+    background: #f1f1f1;
+    margin-bottom: 20px;
+    text-align: left;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Chat Message Styling */
+.user-message {
+    text-align: right;
+    margin: 8px 0;
+    color: #007bff;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.assistant-message {
+    text-align: left;
+    margin: 8px 0;
+    color: #333;
+    font-size: 1.1rem;
+    font-weight: 400;
+}
+
+/* Scrollbar Styling for Chat Box */
+.chat-box::-webkit-scrollbar {
+    width: 8px;
+}
+
+.chat-box::-webkit-scrollbar-thumb {
+    background: #007bff;
+    border-radius: 10px;
+}
+
+.chat-box::-webkit-scrollbar-thumb:hover {
+    background: #0056b3;
+}
+
+/* Chat Box Input */
+.chat-box input[type="text"] {
+    width: 100%;
+    padding: 12px 18px;
+    margin-top: 10px;
+    border-radius: 25px;
+    border: 1px solid #ddd;
+    font-size: 1rem;
+    transition: border 0.3s ease;
+}
+
+.chat-box input[type="text"]:focus {
+    border: 1px solid #007bff;
+    outline: none;
+}

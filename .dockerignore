@@ -1,0 +1,38 @@
+# Byte-compiled files
+__pycache__/
+*.py[cod]
+
+# Logs
+logs/
+*.log
+
+# Virtual environment
+venv/
+.env/
+voice
+voice/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Git files
+.git/
+.gitignore
+
+# Docker compose override files
+docker-compose.override.yml
+docker-compose.override.yaml
+
+# Cache
+*.cache
+*.tmp
+
+# Configurations and secrets
+config.yaml
+secrets.yaml
+
+# IDE specific files
+.vscode/
+.idea/
+*.iml

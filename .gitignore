@@ -1,0 +1,33 @@
+# Byte-compiled files
+__pycache__/
+*.py[cod]
+*.log
+
+# Virtual environment
+venv/
+.env/
+voice/
+voice
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Logs and cache
+logs/
+*.log
+*.tmp
+
+# Docker ignore
+docker-compose.override.yml
+docker-compose.override.yaml
+
+# Configs
+config.yaml
+secrets.yaml
+
+# Environment variables
+.env
+
+# Flask cache
+instance/

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Assistant</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header with Logo -->
+        <div class="header">
+            <img src="/static/css/logo.png" alt="Logo" class="logo">
+            <h1>Infy - Your Smart Voice Assistant</h1>
+            <p>Your AI assistant for smarter decisions and seamless conversations.</p>
+        </div>
+
+        <!-- Chat UI -->
+        <div class="chat-box" id="chat-box"></div>
+
+        <!-- Control Buttons -->
+        <div class="button-container">
+            <button id="start-btn" class="button">Speak</button>
+            <button id="interrupt-btn" class="button warning">Interrupt</button>
+            <button id="exit-btn" class="button">Exit from current functionality</button>
+            <button id="quit-btn" class="button danger">Quit</button>
+        </div>
+    </div>
+
+    <script>
+        const chatBox = document.getElementById('chat-box');
+
+        // Function to add messages to the chat UI
+        function addMessage(type, message) {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add(type === 'user' ? 'user-message' : 'assistant-message');
+            messageElement.innerText = type === 'user' ? `You: ${message}` : `Assistant: ${message}`;
+            chatBox.appendChild(messageElement);
+            chatBox.scrollTop = chatBox.scrollHeight; // Auto-scroll to the bottom
+        }
+
+        // Greet the user when the page loads
+        document.addEventListener('DOMContentLoaded', async () => {
+            const response = await fetch('/start', { method: 'POST' });
+            const data = await response.json();
+
+            // Add greeting to the chat and speak it
+            addMessage('assistant', data.response);
+            const utterance = new SpeechSynthesisUtterance(data.response);
+            window.speechSynthesis.speak(utterance);
+        });
+
+        // Speech Recognition (STT)
+        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.lang = 'en-US';
+
+        recognition.onresult = async (event) => {
+            const userInput = event.results[0][0].transcript;
+            addMessage('user', userInput); // Add user input to chat
+
+            // Send the input to the backend
+            const response = await fetch('/process_input', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ user_input: userInput })
+            });
+            const data = await response.json();
+
+            // Add assistant response to chat and speak it
+            addMessage('assistant', data.response);
+            const utterance = new SpeechSynthesisUtterance(data.response);
+            window.speechSynthesis.speak(utterance);
+        };
+
+        recognition.onerror = () => {
+            const errorMessage = "Sorry, I didn't catch that. Please try again.";
+            addMessage('assistant', errorMessage); // Show the message in the chat UI
+            const utterance = new SpeechSynthesisUtterance(errorMessage); // Convert text to speech
+            window.speechSynthesis.speak(utterance); // Speak the message
+        };
+
+
+        // Start button functionality
+        document.getElementById('start-btn').addEventListener('click', () => {
+            recognition.start(); // Start listening for user input
+        });
+
+        // Interrupt button functionality
+        document.getElementById('interrupt-btn').addEventListener('click', async () => {
+            const response = await fetch('/interrupt', { method: 'POST' });
+            const data = await response.json();
+            addMessage('assistant', data.response); // Show the interruption acknowledgment
+            window.speechSynthesis.cancel(); // Stop speaking immediately
+        });
+
+        // Exit button functionality
+        document.getElementById("exit-btn").addEventListener("click", () => {
+            fetch("/exit", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    // Add assistant response to chat and speak it
+                    addMessage("assistant", data.response);
+                    const utterance = new SpeechSynthesisUtterance(data.response);
+                    window.speechSynthesis.speak(utterance);
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
+                });
+        });
+
+
+        // Quit button functionality
+        document.getElementById('quit-btn').addEventListener('click', async () => {
+            const response = await fetch('/stop', { method: 'POST' });
+            const data = await response.json();
+
+            // Add assistant response to the chat
+            addMessage('assistant', data.response);
+
+            // Speak the message
+            const utterance = new SpeechSynthesisUtterance(data.response);
+            window.speechSynthesis.speak(utterance);
+
+            // Wait for the TTS to finish before redirecting
+            utterance.onend = () => {
+                if (data.redirect) {
+                    window.location.href = data.redirect;
+                }
+            };
+        });
+    </script>
+</body>
+</html>
