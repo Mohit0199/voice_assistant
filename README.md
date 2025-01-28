@@ -50,8 +50,7 @@ The assistant integrates **Flask** for the backend and a robust **chat-based UI*
 
 ### Usage
 1. Open the app in your browser.
-2. Provide your **Groq API Key**.
-3. Interact with the voice assistant using the **chat UI** or your voice:
+2. Interact with the voice assistant using the **chat UI** or your voice:
    - Click **Speak** to start.
    - Click **Interrupt** to stop a response midway.
    - Click **Exit** to leave the current functionality.
@@ -83,7 +82,6 @@ voice-assistant/
 │   │   └── styles.css       # Styling for the web interface
 │
 ├── templates/
-│   ├── api_key.html         # API key input page
 │   ├── assistant.html       # Voice assistant interface
 │
 ├── logger/
